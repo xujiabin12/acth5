@@ -1,0 +1,192 @@
+*{padding: 0;margin: 0}
+.main,body{
+    width: 640px;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+.talkto2 {
+    float: left;
+    margin: 20px 0 0 20px;
+    width: 30px;
+    height: 30px;
+    border-left: 1px solid #333;
+    border-top: 1px solid #333;
+    transform: rotate(-45deg);
+}
+.title{
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 50%;
+    width: 640px;
+    margin: 0 0 0 -320px;
+    background-color: #fff;
+    height: 80px;
+    border-bottom: 1px solid #f3f3f3;
+}
+.talktozk{
+    float: right;
+    color: #2ab888;
+    line-height: 80px;
+    font-size: 28px;
+    margin: 0 20px 0 0;
+}
+.talkto{
+    line-height: 80px;
+    font-size: 28px;
+    width: 440px;
+    text-align: center;
+    float: left;
+}
+.footer{
+    position: fixed;
+    bottom: 0;
+    padding: 15px 0;
+    height: 60px;
+    left: 50%;
+    width: 640px;
+    margin: 0 0 0 -320px;
+    background: #f5f5f7;
+    border-top: 1px solid #c2c2c4;
+}
+.chat02_bar {
+    float: right;
+    width: 90px;
+    height: 60px;
+    font-size: 28px;
+    color: #2ab888;
+    text-align: center;
+    line-height: 60px;
+}
+.chat02_content {
+    width: 425px;
+    float: right;
+}
+.chat02_content textarea {
+    border: medium none;
+    display: block;
+    width: 405px;
+    height: 40px;
+    padding: 10px;
+    font-size: 22px;
+    color: #000;
+    line-height: 40px;
+    background: #fff;
+    overflow-y: auto;
+    resize: vertical;
+    border-radius: 5px;
+}
+.yuyinviewbox {
+    display: none;
+    border: 1px solid #c2c2c4;
+    float: right;
+    width: 405px;
+    height: 40px;
+    padding: 10px;
+    font-size: 22px;
+    color: #000;
+    line-height: 40px;
+    overflow-y: auto;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.eachjp_yuyin.on {
+    background: url("../img/yuyin.png") no-repeat center center;
+}
+.eachjp_yuyin {
+    float: right;
+    height: 60px;
+    width: 120px;
+    text-align: center;
+    line-height: 60px;
+    font-size: 25px;
+    color: #ff5100;
+    background: url("../img/jp.png") no-repeat center center;
+}
+.content{
+    display: block;
+    overflow-y: auto;
+    width: 640px;
+    margin: 80px 0 90px;
+}
+.boxcontent, .boxcontent2 {
+    display: block;
+    margin-top: 10px;
+    overflow: hidden;
+    position: relative;
+}
+.boxcontent .sanjiaobox {
+    right: 97px;
+}
+.sanjiaobox {
+    position: absolute;
+    width: 14px;
+    top: 50px;
+}
+.boxcontent2 .sanjiaobox {
+    left: 97px;
+    transform: rotate(180deg);
+}
+.sanjiaobox img {
+    width: 100%;
+}
+.userheadpic img {
+    display: block;
+    width: 100%;
+    margin: 0;
+}
+.boxcontent .userheadpic {
+    float: right;
+    margin: 15px 15px 0 0;
+}
+.userheadpic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.boxcontent p1, .boxcontent p3 {
+    text-align: right;
+}
+.boxcontent2 p1, .boxcontent p1 {
+    display: block;
+    margin: 0 110px 0 110px;
+    font-size: 18px;
+    color: #999999;
+    line-height: 35px;
+}
+.boxcontent p3 {
+    float: right;
+    margin: 0 15px 0 0;
+}
+.boxcontent2 p3, .boxcontent p3 {
+    overflow: hidden;
+    text-align: left;
+    max-width: 420px;
+    padding: 10px 20px;
+    line-height: 30px;
+    background: #eee;
+    border-radius: 16px;
+    color: #666666;
+    font-size: 24px;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+.boxcontent2 .userheadpic {
+    float: left;
+    margin: 15px 0 0 15px;
+}
+.boxcontent2 p3 {
+    float: left;
+    margin: 0 0 0 15px;
+}
+.boxcontent{
+    text-align: right;
+}
+.boxcontent2{
+    text-align: left;
+}
