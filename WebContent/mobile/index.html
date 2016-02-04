@@ -17,37 +17,40 @@
 </head>
 <body>
         <div class="title">
-            <span class="talkto2"></span>
-            <span class="talkto">群组英才01聊天中</span>
+<!--             <span class="talkto2"></span> -->
+            <span id="talkto" class="talkto"></span>
             <span class="talktozk">只看导师</span>
         </div>
         <!--聊天内容 content-->
-        <div class="content">
-            <div class="boxcontent">
-                <div class="sanjiaobox">
-                    <img src="img/sj.png">
-                </div>
-                <div class="userheadpic">
-                    <img src="img/0.jpeg">
-                </div>
-                <p1>wangwu</p1>
-                <p3 class="chat-content-p3" classname="chat-content-p3">1</p3>
-            </div>
-            <div class="boxcontent2">
-                <div class="sanjiaobox">
-                    <img src="img/sj.png">
-                </div>
-                <div class="userheadpic">
-                    <img src="img/0.jpeg">
-                </div>
-                <p1>wangwu</p1>
-                <p3 class="chat-content-p3" classname="chat-content-p3">1</p3>
-            </div>
-
+        <div id="chat01">
+        	<!--<div class="content">-->
+	            <!--<div class="boxcontent">-->
+	                <!--<div class="sanjiaobox">-->
+	                    <!--<img src="img/sj.png">-->
+	                <!--</div>-->
+	                <!--<div class="userheadpic">-->
+	                    <!--<img src="img/0.jpeg">-->
+	                <!--</div>-->
+	                <!--<p1>wangwu</p1>-->
+	                <!--<p3 class="chat-content-p3" classname="chat-content-p3">1</p3>-->
+	            <!--</div>-->
+	            <!--<div class="boxcontent2">-->
+	                <!--<div class="sanjiaobox">-->
+	                    <!--<img src="img/sj.png">-->
+	                <!--</div>-->
+	                <!--<div class="userheadpic">-->
+	                    <!--<img src="img/0.jpeg">-->
+	                <!--</div>-->
+	                <!--<p1>wangwu</p1>-->
+	                <!--<p3 class="chat-content-p3" classname="chat-content-p3">1</p3>-->
+	            <!--</div>-->
+	<!-- -->
+	        <!--</div>-->
         </div>
+        
         <!--聊天内容 content end-->
         <div class="footer">
-                <div class="chat02_bar">发送</div>
+                <div class="chat02_bar" onclick="sendText()">发送</div>
                 <div id="input_content" class="chat02_content">
                     <textarea id="talkInputId" style="resize: none;"></textarea>
                 </div>

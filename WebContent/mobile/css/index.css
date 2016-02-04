@@ -111,13 +111,13 @@
     width: 640px;
     margin: 80px 0 90px;
 }
-.boxcontent, .boxcontent2 {
+.rightContent, .leftContent {
     display: block;
     margin-top: 10px;
     overflow: hidden;
     position: relative;
 }
-.boxcontent .sanjiaobox {
+.rightContent .sanjiaobox {
     right: 97px;
 }
 .sanjiaobox {
@@ -125,7 +125,7 @@
     width: 14px;
     top: 50px;
 }
-.boxcontent2 .sanjiaobox {
+.leftContent .sanjiaobox {
     left: 97px;
     transform: rotate(180deg);
 }
@@ -137,7 +137,7 @@
     width: 100%;
     margin: 0;
 }
-.boxcontent .userheadpic {
+.rightContent .userheadpic {
     float: right;
     margin: 15px 15px 0 0;
 }
@@ -148,21 +148,21 @@
     overflow: hidden;
 }
 
-.boxcontent p1, .boxcontent p3 {
+.rightContent p1, .rightContent p3 {
     text-align: right;
 }
-.boxcontent2 p1, .boxcontent p1 {
+.leftContent p1, .rightContent p1 {
     display: block;
     margin: 0 110px 0 110px;
     font-size: 18px;
     color: #999999;
     line-height: 35px;
 }
-.boxcontent p3 {
+.rightContent p3 {
     float: right;
     margin: 0 15px 0 0;
 }
-.boxcontent2 p3, .boxcontent p3 {
+.leftContent p3, .rightContent p3 {
     overflow: hidden;
     text-align: left;
     max-width: 420px;
@@ -176,17 +176,17 @@
     word-wrap: break-word;
     white-space: pre-wrap;
 }
-.boxcontent2 .userheadpic {
+.leftContent .userheadpic {
     float: left;
     margin: 15px 0 0 15px;
 }
-.boxcontent2 p3 {
+.leftContent p3 {
     float: left;
     margin: 0 0 0 15px;
 }
-.boxcontent{
+.rightContent{
     text-align: right;
 }
-.boxcontent2{
+.leftContent{
     text-align: left;
 }
