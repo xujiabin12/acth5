@@ -6,6 +6,7 @@
 <meta content="telephone=no" name="format-detection" />
 <title>ACT</title>
 <link rel="stylesheet" href="css/index.css" />
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="js/sdk/jquery-1.11.1.js"></script>
 <script src="js/sdk/strophe.js"></script>
 <script src="js/sdk/json2.js"></script>
@@ -14,38 +15,17 @@
 <script src="js/sdk/bootstrap.js"></script>
 <script src="js/util.js"></script>
 <script src="js/index.js?v=@@hash"></script>
+<script src="js/sdk/wxaudio.js?v=@@hash"></script>
 </head>
 <body>
         <div class="title">
 <!--             <span class="talkto2"></span> -->
             <span id="talkto" class="talkto"></span>
-            <span class="talktozk">只看导师</span>
+            <span id="onlyTeacher" class="talktozk">只看导师</span>
         </div>
         <!--聊天内容 content-->
         <div id="chat01">
-        	<!--<div class="content">-->
-	            <!--<div class="boxcontent">-->
-	                <!--<div class="sanjiaobox">-->
-	                    <!--<img src="img/sj.png">-->
-	                <!--</div>-->
-	                <!--<div class="userheadpic">-->
-	                    <!--<img src="img/0.jpeg">-->
-	                <!--</div>-->
-	                <!--<p1>wangwu</p1>-->
-	                <!--<p3 class="chat-content-p3" classname="chat-content-p3">1</p3>-->
-	            <!--</div>-->
-	            <!--<div class="boxcontent2">-->
-	                <!--<div class="sanjiaobox">-->
-	                    <!--<img src="img/sj.png">-->
-	                <!--</div>-->
-	                <!--<div class="userheadpic">-->
-	                    <!--<img src="img/0.jpeg">-->
-	                <!--</div>-->
-	                <!--<p1>wangwu</p1>-->
-	                <!--<p3 class="chat-content-p3" classname="chat-content-p3">1</p3>-->
-	            <!--</div>-->
-	<!-- -->
-	        <!--</div>-->
+
         </div>
         
         <!--聊天内容 content end-->
@@ -54,7 +34,7 @@
                 <div id="input_content" class="chat02_content">
                     <textarea id="talkInputId" style="resize: none;"></textarea>
                 </div>
-                <div class="yuyinviewbox">语音</div>
+                <div id="audio" class="yuyinviewbox">按住 说话</div>
                 <div class="eachjp_yuyin on"></div>
                 <!--<div class="flowerbox">1</div>
                    没有花的时候展示

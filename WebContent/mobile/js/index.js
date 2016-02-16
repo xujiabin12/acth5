@@ -11,9 +11,15 @@ var groupFlagMark = "group--";
 var msgCardDivId = "chat01";
 var talkInputId = "talkInputId";
 var curRoomId = null;
+var onlyTeacher = "1";
 $(function(){
 	$('.content').css('height',$(window).height()-172);
     $(window).resize(function(){$('.content').css('height',$(window).height()-172);});
+    $('#talkInputId').focus(function(){
+        $('.content').css('height',$(window).height()-172);}
+    ).blur(function(){
+            $('.content').css('height',$(window).height()-172);
+        });
     //语音切换
     $('.eachjp_yuyin').click(function(){
         if($(this).hasClass('on')){
@@ -26,10 +32,12 @@ $(function(){
             $('.yuyinviewbox').hide();
         }
     });
+    $("#onlyTeacher").click(onlyTeacher);
     //环信
 	conn = new Easemob.im.Connection();
     //初始化连接
 	conn.init({
+        wait : '1800',
         //当连接成功时的回调方法
 		onOpened : function(){
             handleOpen(conn);
@@ -88,10 +96,7 @@ var handleOpen = function(conn) {
 
 //连接中断时的处理，主要是对页面进行处理
 var handleClosed = function() {
-    curUserId = null;
-    curChatUserId = null;
-    curRoomId = null;
-    alert("连接超时，请重新进入...");
+    login();
 };
 //收到文本消息回调
 var handleTextMessage = function(message) {
@@ -99,6 +104,10 @@ var handleTextMessage = function(message) {
     var fromNickName = message.ext.nickName;
     var headImg = message.ext.headImg;
     var role = message.ext.role;
+    var serverId = message.ext.serverId;
+    if(onlyTeacher == '0' && role != '1'){
+        return;
+    }
     //var mestype = message.type;//消息发送的类型是群组消息还是个人消息
     var messageContent = message.data;//文本消息体
     //TODO  根据消息体的to值去定位那个群组的聊天记录
@@ -111,33 +120,33 @@ var handleTextMessage = function(message) {
 //异常情况下的处理方法
 var handleError = function(e) {
     if (curUserId == null) {
-        alert("连接超时，请重新进入...");
+        alert("连接超时，请退出重新进入...");
     } else {
         var msg = e.msg;
         if (e.type == EASEMOB_IM_CONNCTION_SERVER_CLOSE_ERROR) {
-            if (msg == "" || msg == 'unknown' ) {
-                alert("服务器断开连接,可能是因为在别处登录，请重新进入...");
-            } else {
-                alert("服务器断开连接，请重新进入...");
-            }
+            login();
         } else if (e.type === EASEMOB_IM_CONNCTION_SERVER_ERROR) {
             if (msg.toLowerCase().indexOf("user removed") != -1) {
                 alert("用户已经在管理后台删除");
             }
         } else {
-            alert(msg);
+            login();
         }
     }
-    conn.stopHeartBeat(conn);
+    //conn.stopHeartBeat(conn);
 };
 
 //发送消息
-var sendText = function() {
+var sendText = function(serverId) {
     if(!isStopSpeak()){
         return;
     }
     var msgInput = document.getElementById(talkInputId);
     var msg = msgInput.value;
+    if(serverId){
+        msg = "<label onclick='playVoice(\""+serverId+"\")'>点击播放</label>";
+    }
+
     if (msg == null || msg.length == 0) {
         return;
     }
@@ -149,7 +158,7 @@ var sendText = function() {
         to : to,
         msg : msg,
         type : "groupchat",
-        ext : {"nickName":curNickName,"headImg":headImg,"role":curRole}
+        ext : {"nickName":curNickName,"headImg":headImg,"role":curRole,"serverId":serverId}
     };
     //easemobwebim-sdk发送文本消息的方法 to为发送给谁，meg为文本消息对象
     conn.sendTextMessage(options);
@@ -262,7 +271,6 @@ var login = function(){
 var joinGroup = function(){
     var wxcode = util.getUrlParam("code");
      groupId = util.getUrlParam("groupId");
-    alert("code:"+wxcode+"  groupid:"+groupId);
     if(wxcode){
         $.ajax({
             type : "post",
@@ -289,7 +297,7 @@ var joinGroup = function(){
             }
         });
     }else{
-        alert("请关注后在访问！");
+        alert("请授权后在访问！");
     }
 };
 
@@ -321,4 +329,14 @@ var getRoleName = function(role){
         case '1':return "(老师)";
         default : return "";
     }
+};
+
+var onlyTeacher = function(){
+  if(onlyTeacher == '0'){
+      onlyTeacher = "1";
+      $("#onlyTeacher").html("只看导师");
+  }else{
+      onlyTeacher = "0";
+      $("#onlyTeacher").html("看全部");
+  }
 };

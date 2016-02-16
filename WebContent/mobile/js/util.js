@@ -18,7 +18,7 @@
     };
 
     /**
-     * Ìæ»»ËùÓÐ×Ö·û´®
+     * ï¿½æ»»ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½
      */
     String.prototype.replaceAll = function(s1,s2) {
         return this.replace(new RegExp(s1,"gm"),s2);
@@ -26,13 +26,18 @@
     var _util = {};
 
     var serverUrl = "http://101.201.209.109/act/";
+    
+//    var serverUrl = "http://124.192.206.155:8080/act/";
+    
+    
+    
 
 
     var getServerUrl = function(){
         return serverUrl;
     };
 
-    //»ñÈ¡url²ÎÊýÖµ
+    //ï¿½ï¿½È¡urlï¿½ï¿½ï¿½ï¿½Öµ
     var getUrlParam = function (name){
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);

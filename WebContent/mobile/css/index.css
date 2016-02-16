@@ -4,6 +4,8 @@
     height: 100%;
     margin: 0 auto;
     position: relative;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
 .talkto2 {
     float: left;
