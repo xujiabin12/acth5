@@ -139,6 +139,7 @@ var handleError = function(e) {
 //发送消息
 var sendText = function(serverId) {
     if(!isStopSpeak()){
+    	alert("你已被禁言10分钟");
         return;
     }
     var msgInput = document.getElementById(talkInputId);
@@ -303,21 +304,22 @@ var joinGroup = function(){
 
 //是否禁言
 var isStopSpeak = function(){
+	var flag = true;
     $.ajax({
         type : "post",
         dataType : "json",
         async : false,
         data : {
-            userId : actUsrId
+            userId : actUsrId+""
         },
         url : util.getServerUrl()+"users/isStopSpeak",
         success : function(data){
             if(data.isStopSpeak == '0'){
-                return false;
+            	flag = false;
             }
         }
     });
-    return true;
+    return flag;
 };
 
 var getRoleName = function(role){

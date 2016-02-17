@@ -39,7 +39,6 @@ var startRecord = function(){
 };
 
 var bofang = function(localId){
-	alert(localId);
 	initWxJsAndDo(['playVoice'],function(){
 		wx.playVoice({
 			localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
@@ -120,10 +119,10 @@ $(function(){
 		},
 		touchend: function(){
 			//结束录音
-			$("#audio").text("按住 说话")
+			$("#audio").text("按住 说话");
 			stopRecordAndSend();
 			return false;
 		}
-	})
+	});
 });
 
