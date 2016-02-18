@@ -1,45 +1,18 @@
 var util = window._util;
-//初始化微信jsapi接口，调用微信js用
-function initWxJsAndDo(jsApi,callMethod){
-	$.ajax({
-		type : "post",
-		dataType : "json",
-		async:false,
-		data : {
-			url : location.href
-		},
-		url : util.getServerUrl()+"wx/initWxJsApi",
-		success : function(data){
-			if(data.code=="0"){
-                wx.config({
-                    debug : false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                    appId : data.appId, // 必填，公众号的唯一标识
-                    timestamp : data.timestamp, // 必填，生成签名的时间戳
-                    nonceStr : data.noncestr, // 必填，生成签名的随机串
-                    signature : data.signature,// 必填，签名，见附录1
-                    jsApiList : jsApi// 必填，需要使用的JS接口列表
-                });
-                
-                callMethod();
-			}else{
-				alert("操作失败");
-			}
-		}
-	});
-}
+
 
 
 var audio = {};
 
 //开始录音
 var startRecord = function(){
-	initWxJsAndDo(['startRecord'],function(){
+	util.initWxJsAndDo(['startRecord'],function(){
 		wx.startRecord();
 	});
 };
 
 var bofang = function(localId){
-	initWxJsAndDo(['playVoice'],function(){
+	util.initWxJsAndDo(['playVoice'],function(){
 		wx.playVoice({
 			localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
 		});
@@ -48,7 +21,7 @@ var bofang = function(localId){
 
 //停止录音并且上传
 var stopRecordAndSend = function(){
-	initWxJsAndDo(['stopRecord'],function(){
+	util.initWxJsAndDo(['stopRecord'],function(){
 		wx.stopRecord({
 		    success: function (res) {
 		    	//上传语音
@@ -62,7 +35,7 @@ var stopRecordAndSend = function(){
 
 //监听录音自动停止接口
 var voiceRecordEnd = function(){
-	initWxJsAndDo(['onVoiceRecordEnd'],function(){
+	util.initWxJsAndDo(['onVoiceRecordEnd'],function(){
 		wx.onVoiceRecordEnd({
 		    // 录音时间超过一分钟没有停止的时候会执行 complete 回调
 		    complete: function (res) {
@@ -74,7 +47,7 @@ var voiceRecordEnd = function(){
 };
 //播放语音接口
 var playVoice = function(serverId){
-	initWxJsAndDo(['downloadVoice'],function(){
+	util.initWxJsAndDo(['downloadVoice'],function(){
 		wx.downloadVoice({
 		    serverId: serverId,
 			isShowProgressTips: 0, // 默认为1，显示进度提示
@@ -88,7 +61,7 @@ var playVoice = function(serverId){
 
 //上传语音接口
 var uploadVoice = function(localId){
-	initWxJsAndDo(['uploadVoice'],function(){
+	util.initWxJsAndDo(['uploadVoice'],function(){
 		wx.uploadVoice({
 		    localId: localId, // 需要上传的音频的本地ID，由stopRecord接口获得
 		    isShowProgressTips: 0, // 默认为1，显示进度提示
@@ -108,7 +81,6 @@ var sendVoice = function(serviceId){
 };
 
 
-
 $(function(){
 	$("#audio").on({
 		touchstart: function(e){
@@ -116,6 +88,7 @@ $(function(){
 			$("#audio").text("松开 结束");
 			startRecord();
 			e.preventDefault();
+			e.stopPropagation();
 		},
 		touchend: function(){
 			//结束录音
@@ -124,5 +97,8 @@ $(function(){
 			return false;
 		}
 	});
+	
+	
+	
 });
 
