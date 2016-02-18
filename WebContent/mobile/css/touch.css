@@ -1,0 +1,106 @@
+*{
+    color: #333;
+    font-size: 16px;
+}
+body{
+    position: relative;
+    width: 640px;
+    margin: 0 auto;
+}
+.staticbox{
+    display: block;
+    overflow: hidden;
+    margin: 0 20px;
+}
+.staticbox h2{
+    display: block;
+    text-align: center;
+    line-height: 80px;
+    font-size: 28px;
+}
+.staticbox h3{
+    line-height: 45px;
+    font-size: 16px;
+    margin: 0;
+}
+.staticbox{
+    display: block;
+    overflow: hidden;
+    padding: 0 0 50px;
+}
+.staticbox p,.staticbox label{
+    display: block;
+}
+.staticbox p{
+    font-size: 14px;
+    line-height: 40px;
+}
+.staticbox p em{
+    font-size: 14px;
+    color: #3266ff;
+    font-style: normal;
+}
+.staticbox p a{
+    display: inline-block;
+    color: #3266ff;
+    font-size: 14px;
+    text-decoration: underline;
+}
+.staticbox label{
+    margin: 20px 0 0;
+    color: #f00;
+    line-height: 40px;
+    text-align: center;
+}
+.staticbox img{
+    display: block;
+    margin: 20px 0 0;
+    width: 600px;
+}
+.gac_viewcontent{
+    display: block;
+    overflow: hidden;
+}
+.gac_viewcontent span{
+    display: block;
+    line-height: 60px;
+    margin: 20px 0 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+.gac_viewcontent b{
+    display: block;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 40px;
+    color: #3266ff;
+}
+.staticbox .gac_viewcontent p{
+    font-size: 12px;
+    line-height: 25px;
+}
+table {
+    border-top: 1px solid #85848b;
+    border-left: 1px solid #85848b;
+}
+table td,table th{
+    line-height: 45px;
+    font-size: 20px;
+    text-align: center;
+    border-bottom: 1px solid #85848b;
+    border-right: 1px solid #85848b;
+}
+table.tableone td,table.tableone th{
+    font-size: 14px;
+}
+table td.lefttd{
+    text-align: left;
+    width: 340px;
+    text-indent: 15px;
+}
+table td span{
+    display: block;
+    line-height: 25px;
+    padding: 0px 5px;
+    text-align: left;
+}
