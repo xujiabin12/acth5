@@ -1,3 +1,4 @@
+var url = "";
 $(function(){
 	listenerShare();
 });
@@ -10,7 +11,9 @@ function listenerShare(){
 		            title: document.title,     //分享后自定义标题
 		            imgUrl: 'http://mobile.u-ef.cn/img/act.jpg',  //分享的LOGO
 		            success: function (res) {
-		            	$(".96wxDiy").find("strong").html("http://www.baidu.com");
+						var ta = "<a href='"+url+"'>点击连接进入</a>";
+						var ps = $("#js_content").find("p");
+						$(ps[1]).html(ta);
 		            },
 		            cancel: function (res) {
 		            	
@@ -50,6 +53,21 @@ var initWxJsAndDo = function(jsApi,callMethod){
                 callMethod();
 			}else{
 				alert("操作失败");
+			}
+		}
+	});
+};
+
+var getJoinGroupUrl = function () {
+	$.ajax({
+		type : "post",
+		dataType : "json",
+		url : serverUrl+"groups/getJoinGroupUrl",
+		success : function(data){
+			if(data.code=="0"){
+				url = data.url;
+			}else{
+				alert("获取连接失败");
 			}
 		}
 	});

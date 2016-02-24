@@ -79,7 +79,6 @@ var handleOpen = function(conn) {
                                 setCurrentContact(groupFlagMark + room.roomId);
                             }
                         }
-
                     }
                     conn.setPresence();//设置用户上线状态，必须调用
                 },
@@ -105,16 +104,14 @@ var handleTextMessage = function(message) {
     var headImg = message.ext.headImg;
     var role = message.ext.role;
     var serverId = message.ext.serverId;
-    if(onlyTeacher == '0' && role != '1'){
-        return;
-    }
+    
     //var mestype = message.type;//消息发送的类型是群组消息还是个人消息
     var messageContent = message.data;//文本消息体
     //TODO  根据消息体的to值去定位那个群组的聊天记录
     var fromNickname = fromNickName?fromNickName:message.from;
     var fname = fromNickname + getRoleName(role);
 
-    appendMsg(from, message.to, messageContent, null,fname,headImg);
+    appendMsg(from, message.to, messageContent, null,fname,headImg,role);
 };
 
 //异常情况下的处理方法
@@ -145,7 +142,7 @@ var sendText = function(serverId) {
     var msgInput = document.getElementById(talkInputId);
     var msg = msgInput.value;
     if(serverId){
-        msg = "<label onclick='playVoice(\""+serverId+"\")'>点击播放</label>";
+        msg = "speak:"+serverId;
     }
 
     if (msg == null || msg.length == 0) {
@@ -167,7 +164,7 @@ var sendText = function(serverId) {
     //当前登录人发送的信息在聊天窗口中原样显示
     var msgtext = msg.replace(/\n/g, '<br>');
     var nickName = curNickName?curNickName + getRoleName(curRole):curUserId;
-    appendMsg(curUserId, to, msgtext,null,nickName);
+    appendMsg(curUserId, to, msgtext,null,nickName,"");
     //turnoffFaces_box();
     msgInput.value = "";
     msgInput.focus();
@@ -215,22 +212,14 @@ var createContactChatDiv = function(chatUserId) {
  * @param headImages 头像
  * @returns {Element}
  */
-var appendMsg = function(who, contact, message, chattype,nickName,headImages) {
+var appendMsg = function(who, contact, message, chattype,nickName,headImages,role) {
     var contactDivId =  groupFlagMark + contact;
 
-    // 消息体 {isemotion:true;body:[{type:txt,msg:ssss}{type:emotion,msg:imgdata}]}
-    //var localMsg = null;
-    //if (typeof message == 'string') {
-    //    localMsg = Easemob.im.Helper.parseTextMessage(message);
-    //    localMsg = localMsg.body;
-    //} else {
-    //    localMsg = message.data;
-    //}
     //如果没有头像，则默认是当前登陆人的头像
     headImages = headImages?headImages:headImg;
 
     //owner,headimg,nickname,msg
-    createMsg(who==curUserId,headImages,nickName,message,contactDivId);
+    createMsg(who==curUserId,headImages,nickName,message,contactDivId,role);
 
     if (curChatUserId == null) {
         setCurrentContact(contactDivId);
@@ -241,19 +230,39 @@ var appendMsg = function(who, contact, message, chattype,nickName,headImages) {
 
 };
 
-var createMsg = function(owner,headimg,nickname,content,contactDivId){
+var createMsg = function(owner,headimg,nickname,content,contactDivId,role){
+	var state = "";
+        if(role && role == 2){
+            state = "student";
+            if(onlyTeacher == '0'){//只看老师
+                state += "  hide";
+             }
+        }
     var cn = owner?"rightContent":"leftContent";
-    var msg = "<div class='"+cn+"'>";
+
+    //构建语音
+    if(content.indexOf("speak:") != -1){
+        var speakId = content.split(":")[1];
+        var toimg = owner?"img/right.png":"img/left.png";
+        content = "<img src='"+toimg+"' style='width:33px;height:24px;' onclick='playVoice(\""+speakId+"\")' />";
+    }
+    //构建消息
+    var msg = "<div class='"+cn+" "+state+"'>";
             msg +="<div class='sanjiaobox'>";
                 msg += "<img src='img/sj.png'>";
             msg +="</div>";
-            msg +="<div class='userheadpic'>";
+            msg +="<div onclick='toPeople(\""+nickname+"\")' class='userheadpic'>";
                 msg +="<img src='"+headimg+"'>";
             msg +="</div>";
             msg +="<p1>"+nickname+"</p1>";
             msg +="<p3 class='chat-content-p3' classname='chat-content-p3'>"+content+"</p3>";
         msg +="</div>";
     $("#"+curUserId + "-" + contactDivId).append(msg);
+};
+
+//@功能
+var toPeople = function(nickname){
+	document.getElementById("talkInputId").value = "@"+nickname+" ";
 };
 
 var login = function(){
@@ -332,13 +341,15 @@ var getRoleName = function(role){
         default : return "";
     }
 };
-
+// 1 看全部
 var onlyTeacher = function(){
   if(onlyTeacher == '0'){
       onlyTeacher = "1";
       $("#onlyTeacher").html("只看导师");
+      $(".student").show();
   }else{
       onlyTeacher = "0";
       $("#onlyTeacher").html("看全部");
+      $(".student").hiden();
   }
 };

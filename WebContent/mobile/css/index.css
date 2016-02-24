@@ -192,3 +192,9 @@
 .leftContent{
     text-align: left;
 }
+.show{
+	display:block;
+}
+.hide{
+	display:none;
+}

@@ -6,7 +6,7 @@ var audio = {};
 
 //开始录音
 var startRecord = function(){
-	util.initWxJsAndDo(['startRecord','stopRecord','uploadVoice'],function(){
+	util.initWxJsAndDo(['checkJsApi','startRecord','stopRecord','uploadVoice'],function(){
 		wx.startRecord();
 	});
 };
@@ -37,22 +37,22 @@ var uploadVoice = function(localId){
 
 //下载并播放语音接口
 var playVoice = function(serverId){
-	util.initWxJsAndDo(['downloadVoice','playVoice'],function(){
+	util.initWxJsAndDo(['checkJsApi','downloadVoice','playVoice'],function(){
 		wx.downloadVoice({
 		    serverId: serverId,
 			isShowProgressTips: 0, // 默认为1，显示进度提示
 		    success: function (res) {
-				bofang(res.localId);
+		    	alert(res.localId);
+				wx.playVoice({
+					localId: res.localId // 需要播放的音频的本地ID，由stopRecord接口获得
+				});
 		    }
 		});
+		wx.error(function (res) {
+	        alert("cuowu"+JSON.stringify(res));
+	    });
 	});
 	
-};
-//播放语音
-var bofang = function(localId){
-	wx.playVoice({
-		localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
-	});
 };
 
 
@@ -85,18 +85,3 @@ $(function(){
 });
 
 
-
-
-
-//监听录音自动停止接口 次接口暂时不用
-var voiceRecordEnd = function(){
-	util.initWxJsAndDo(['onVoiceRecordEnd'],function(){
-		wx.onVoiceRecordEnd({
-		    // 录音时间超过一分钟没有停止的时候会执行 complete 回调
-		    complete: function (res) {
-		      //上传语音
-		    	uploadVoice(res.localId);
-		    }
-		});
-	});
-};
