@@ -75,7 +75,7 @@ var handleOpen = function(conn) {
                             if(rooms[i].roomId == groupId){
                                 var room = rooms[i];
                                 curRoomId = room.roomId;
-                                $("#talkto").html("与"+room.name+"聊天中")
+                                $("#talkto").html("与"+room.name+"聊天中");
                                 setCurrentContact(groupFlagMark + room.roomId);
                             }
                         }
@@ -168,6 +168,7 @@ var sendText = function(serverId) {
     //turnoffFaces_box();
     msgInput.value = "";
     msgInput.focus();
+    saveMsg(msg);
 };
 
 //设置当前显示的聊天窗口div，如果有联系人则默认选中联系人中的第一个联系人
@@ -309,6 +310,26 @@ var joinGroup = function(){
     }else{
         alert("请授权后在访问！");
     }
+};
+
+//保存发送消息
+var saveMsg = function(message){
+    $.ajax({
+        type : "post",
+        dataType : "json",
+        data : {
+        	groupId : groupId,
+        	nickName:curNickName,
+        	userName:curUserId,
+        	headimg:headImg,
+        	message:message,
+        	role:curRole
+        },
+        url : util.getServerUrl()+"groups/sendMsg",
+        success : function(data){
+            
+        }
+    });
 };
 
 //是否禁言
