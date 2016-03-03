@@ -374,3 +374,38 @@ var onlyTeacher = function(){
       $(".student").hiden();
   }
 };
+var pageNo = 0;
+var getHistory = function(){
+    pageNo = pageNo + 1;
+    $.ajax({
+        type : "post",
+        dataType : "json",
+        data : {
+            groupId : groupId,
+            pageNo:pageNo
+        },
+        url : util.getServerUrl()+"groups/queryHistory",
+        success : function(data){
+            if(data.code == '0'){
+                var list = data.list;
+                if(list && list.length > 0){
+                    var ln = list.length;
+                    var js = null;
+                    for(var i=0;i<ln;i++){
+                        js = list[i];
+                        js.nickname;
+                        js.headimg;
+                        js.role;
+                        js.message;
+                        js.createdtStr;
+                    }
+                }else{
+                    //无聊天记录
+                }
+            }else{
+                alert("加载聊天记录失败！");
+            }
+        }
+    });
+};
+
