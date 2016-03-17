@@ -4,17 +4,15 @@
     height: 100%;
     margin: 0 auto;
     position: relative;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
 }
 .talkto2 {
     float: left;
-    margin: 20px 0 0 20px;
-    width: 30px;
-    height: 30px;
-    border-left: 1px solid #333;
-    border-top: 1px solid #333;
-    transform: rotate(-45deg);
+    margin: 0 0 0 20px;
+    width: 80px;
+    line-height: 80px;
+    text-align: center;
+    font-size: 16px;
+    color: #2ab888;
 }
 .title{
     position: fixed;
@@ -34,10 +32,18 @@
     font-size: 28px;
     margin: 0 20px 0 0;
 }
+.talktoclose{
+    display: none;
+    float: right;
+    color: #2ab888;
+    line-height: 80px;
+    font-size: 16px;
+    margin: 0 20px 0 0;
+}
 .talkto{
     line-height: 80px;
     font-size: 28px;
-    width: 440px;
+    width: 390px;
     text-align: center;
     float: left;
 }
@@ -107,7 +113,7 @@
     color: #ff5100;
     background: url("../img/jp.png") no-repeat center center;
 }
-.content{
+.content,.historybox{
     display: block;
     overflow-y: auto;
     width: 640px;
@@ -197,4 +203,15 @@
 }
 .hide{
 	display:none;
+}
+.loadmore{
+    display: block;
+    margin: 40px 0 0;
+    text-align: center;
+    font-size: 30px;
+    line-height: 50px;
+}
+.historybox{
+    display: none;
+    background: #e1e1e1;
 }

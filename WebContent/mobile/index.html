@@ -15,20 +15,30 @@
 <script src="js/sdk/easemob.im.config.js"></script>
 <script src="js/sdk/bootstrap.js"></script>
 <script src="js/util.js?v=0.0.2"></script>
-<script src="js/index.js?v=0.0.1"></script>
-<script src="js/sdk/wxaudio.js?v=0.0.1"></script>
+<script src="js/index.js?v=0.0.3"></script>
+<script src="js/sdk/wxaudio.js?v=0.0.7"></script>
 </head>
-<body>
+<body id="body">
         <div class="title">
-<!--             <span class="talkto2"></span> -->
+             <span id="talkto2" class="talkto2">聊天记录</span>
             <span id="talkto" class="talkto"></span>
             <span id="onlyTeacher" class="talktozk">只看导师</span>
+            <span id="talktoclose" class="talktoclose">关闭</span>
         </div>
         <!--聊天内容 content-->
-        <div id="chat01">
+        <div class="content" id="chat01">
 
         </div>
-        
+        <!--聊天记录-->
+        <div id="historybox" class="historybox">
+            <!---老师标红 end-->
+            <div class="loadmore" id="loadmore">点击加载更多...</div>
+            <div id="histontent">
+
+
+            </div>
+        </div>
+        <!--聊天记录 end-->
         <!--聊天内容 content end-->
         <div class="footer">
                 <div class="chat02_bar" onclick="sendText()">发送</div>
@@ -37,10 +47,6 @@
                 </div>
                 <div id="audio" class="yuyinviewbox">按住 说话</div>
                 <div class="eachjp_yuyin on"></div>
-                <!--<div class="flowerbox">1</div>
-                   没有花的时候展示
-                <div class="flowerbox on"></div>
-                  没有花的时候展示 end     -->
                 <div style="clear: both;"></div>
         </div>
 </body>

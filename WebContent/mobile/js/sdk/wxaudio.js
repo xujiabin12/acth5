@@ -1,9 +1,25 @@
 var util = window._util;
 
-
-
-var audio = {};
-
+$(function(){
+	$("#audio").on({
+		touchstart: function(e){
+			//开始录音
+			$("#audio").text("松开 结束");
+			startRecord();
+			e.preventDefault();
+			e.stopPropagation();
+		},
+		touchend: function(){
+			//结束录音
+			$("#audio").text("按住 说话");
+			stopRecordAndSend();
+			return false;
+		}
+	});
+});
+wx.error(function (res) {
+	alert("错误："+JSON.stringify(res));
+});
 //开始录音
 var startRecord = function(){
 	util.initWxJsAndDo(['checkJsApi','startRecord','stopRecord','uploadVoice'],function(){
@@ -29,59 +45,80 @@ var uploadVoice = function(localId){
 		    localId: localId, // 需要上传的音频的本地ID，由stopRecord接口获得
 		    isShowProgressTips: 0, // 默认为1，显示进度提示
 		        success: function (res) {
-		         // 返回音频的服务器端ID 
-		        sendVoice(res.serverId);
+		         // 返回音频的服务器端ID
+					if(res.serverId){
+						sendVoice(res.serverId);
+					}
+
 		    }
 		});
 };
 
-//下载并播放语音接口
+//播放语音接口
 var playVoice = function(serverId){
-	util.initWxJsAndDo(['checkJsApi','downloadVoice','playVoice'],function(){
-		wx.downloadVoice({
-		    serverId: serverId,
-			isShowProgressTips: 0, // 默认为1，显示进度提示
-		    success: function (res) {
-		    	alert(res.localId);
-				wx.playVoice({
-					localId: res.localId // 需要播放的音频的本地ID，由stopRecord接口获得
-				});
-		    }
-		});
-		wx.error(function (res) {
-	        alert("cuowu"+JSON.stringify(res));
-	    });
-	});
-	
+	$.ajax({
+        type : "post",
+        dataType : "json",
+        data : {
+       	 voiceId : serverId
+        },
+        url : util.getServerUrl()+"wx/placeVoice",
+        success : function(data){
+	       	if(data.code == '0'){
+	       		toAudio(data.url);
+	       	}else{
+	       		alert("下载语音失败");
+	       	}
+        }
+    });
 };
 
+var toAudio = function(url){
+	 var audio = document.getElementById("actAudio");
+     if(!audio){
+         audio = document.createElement("audio");
+         audio.id = 'actAudio';
+         audio.src = url;
+         audio.autoplay = 'autoplay';
+         document.getElementById("body").appendChild(audio);
+     }else{
+         audio.src = url;
+     }
+};
 
 
 
 
 //发送语音
 var sendVoice = function(serviceId){
-	//发送到界面
-	sendText(serviceId);
+	 $.ajax({
+         type : "post",
+         dataType : "json",
+         data : {
+        	 voiceId : serviceId
+         },
+         url : util.getServerUrl()+"wx/uploadVoiceId",
+         success : function(data){
+        	//发送到界面
+        		sendText(serviceId);
+         }
+     });
+	
+	
 };
 
-
-$(function(){
-	$("#audio").on({
-		touchstart: function(e){
-			//开始录音
-			$("#audio").text("松开 结束");
-			startRecord();
-			e.preventDefault();
-			e.stopPropagation();
-		},
-		touchend: function(){
-			//结束录音
-			$("#audio").text("按住 说话");
-			stopRecordAndSend();
-			return false;
-		}
-	});
-});
-
-
+//wx.ready(function(){
+//	alert("正在加载...");
+//	util.initWxJsAndDo(['checkJsApi','downloadVoice','playVoice'],function(){
+//		wx.downloadVoice({
+//			serverId: serverId,
+//			isShowProgressTips: 0, // 默认为1，显示进度提示
+//			success: function (res) {
+//				alert(res.localId);
+//				wx.playVoice({
+//					localId: res.localId // 需要播放的音频的本地ID，由stopRecord接口获得
+//				});
+//			}
+//		});
+//	});
+//});

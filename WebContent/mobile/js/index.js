@@ -20,6 +20,18 @@ $(function(){
     ).blur(function(){
             $('.content').css('height',$(window).height()-172);
         });
+    $("#loadmore").click(getHistory);
+    $("#talkto2").click(function(){
+    	$("#histontent").html("");
+        getHistory();
+        $("#onlyTeacher,#chat01").hide();
+        $("#talktoclose,#historybox").show();
+    });
+    $("#talktoclose").click(function(){
+    	pageNo = 0;
+        $("#historybox,#talktoclose").hide();
+        $("#onlyTeacher,#chat01").show();
+    });
     //语音切换
     $('.eachjp_yuyin').click(function(){
         if($(this).hasClass('on')){
@@ -101,9 +113,8 @@ var handleClosed = function() {
 var handleTextMessage = function(message) {
     var from = message.from;//消息的发送者
     var fromNickName = message.ext.nickName;
-    var headImg = message.ext.headImg;
+    var cheadImg = message.ext.headImg;
     var role = message.ext.role;
-    var serverId = message.ext.serverId;
     
     //var mestype = message.type;//消息发送的类型是群组消息还是个人消息
     var messageContent = message.data;//文本消息体
@@ -111,7 +122,7 @@ var handleTextMessage = function(message) {
     var fromNickname = fromNickName?fromNickName:message.from;
     var fname = fromNickname + getRoleName(role);
 
-    appendMsg(from, message.to, messageContent, null,fname,headImg,role);
+    appendMsg(from, message.to, messageContent, null,fname,cheadImg,role);
 };
 
 //异常情况下的处理方法
@@ -156,7 +167,7 @@ var sendText = function(serverId) {
         to : to,
         msg : msg,
         type : "groupchat",
-        ext : {"nickName":curNickName,"headImg":headImg,"role":curRole,"serverId":serverId}
+        ext : {"nickName":curNickName,"headImg":headImg,"role":curRole}
     };
     //easemobwebim-sdk发送文本消息的方法 to为发送给谁，meg为文本消息对象
     conn.sendTextMessage(options);
@@ -164,7 +175,7 @@ var sendText = function(serverId) {
     //当前登录人发送的信息在聊天窗口中原样显示
     var msgtext = msg.replace(/\n/g, '<br>');
     var nickName = curNickName?curNickName + getRoleName(curRole):curUserId;
-    appendMsg(curUserId, to, msgtext,null,nickName,"");
+    appendMsg(curUserId, to, msgtext,null,nickName,headImg,curRole);
     //turnoffFaces_box();
     msgInput.value = "";
     msgInput.focus();
@@ -255,7 +266,11 @@ var createMsg = function(owner,headimg,nickname,content,contactDivId,role){
             msg +="<div onclick='toPeople(\""+nickname+"\")' class='userheadpic'>";
                 msg +="<img src='"+headimg+"'>";
             msg +="</div>";
-            msg +="<p1>"+nickname+"</p1>";
+            if(role == '2'){
+            	msg +="<p1>"+nickname+"</p1>";
+            }else{
+            	msg +="<p1 style='color: #f00'>"+nickname+"</p1>";
+            }
             msg +="<p3 class='chat-content-p3' classname='chat-content-p3'>"+content+"</p3>";
         msg +="</div>";
     $("#"+curUserId + "-" + contactDivId).append(msg);
@@ -280,36 +295,45 @@ var login = function(){
 };
 //加入群组
 var joinGroup = function(){
-    var wxcode = util.getUrlParam("code");
-     groupId = util.getUrlParam("groupId");
-    if(wxcode){
-        $.ajax({
-            type : "post",
-            dataType : "json",
-            data : {
-                groupId : groupId,
-                code : wxcode
-            },
-            url : util.getServerUrl()+"groups/joinGroup",
-            success : function(data){
-                //返回用户信息，调用环信的js登录，进入聊天群组界面
-                if(data.code == '0'){
-                    curUserId = data.username;
-                    curNickName = data.nickname;
-                    curRole = data.role;
-                    actUsrId = data.userid;
-                    headImg = data.headimg;
-                    login();
-                }else if(data.code == '3001'){
-                    window.location.href = "touch.html";
-                }else{
-                    alert(data.errorMSG);
-                }
-            }
-        });
-    }else{
-        alert("请授权后在访问！");
-    }
+	groupId = "163388045406503384";
+	curUserId = "ueb3b2dc2d";
+    curNickName = "微微";
+    curRole = "2";
+    actUsrId = "da364249962f441da23744c0ef475c42";
+    headImg = "http://wx.qlogo.cn/mmopen/FkiaAvjRkrM1XUROCbp8pib1B4W4HjS3BeAIvqxBvouvL07sBZ9kyMPUZLLicY4AKwToakvmThoxP4v6tYmKNpnriaxicb4nuO2T7/0";
+    login();
+	
+	
+//    var wxcode = util.getUrlParam("code");
+//     groupId = util.getUrlParam("groupId");
+//    if(wxcode){
+//        $.ajax({
+//            type : "post",
+//            dataType : "json",
+//            data : {
+//                groupId : groupId,
+//                code : wxcode
+//            },
+//            url : util.getServerUrl()+"groups/joinGroup",
+//            success : function(data){
+//                //返回用户信息，调用环信的js登录，进入聊天群组界面
+//                if(data.code == '0'){
+//                    curUserId = data.username;
+//                    curNickName = data.nickname;
+//                    curRole = data.role;
+//                    actUsrId = data.userid;
+//                    headImg = data.headimg;
+//                    login();
+//                }else if(data.code == '3001'){
+//                    window.location.href = "touch.html";
+//                }else{
+//                    alert(data.errorMSG);
+//                }
+//            }
+//        });
+//    }else{
+//        alert("请授权后在访问！");
+//    }
 };
 
 //保存发送消息
@@ -393,14 +417,11 @@ var getHistory = function(){
                     var js = null;
                     for(var i=0;i<ln;i++){
                         js = list[i];
-                        js.nickname;
-                        js.headimg;
-                        js.role;
-                        js.message;
-                        js.createdtStr;
+                        createHistoryMsg(js.username,js.headimg,js.role,js.nickname,js.message);
+                        //js.createdtStr;
                     }
                 }else{
-                    //无聊天记录
+                    alert("无更多聊天记录");
                 }
             }else{
                 alert("加载聊天记录失败！");
@@ -409,3 +430,28 @@ var getHistory = function(){
     });
 };
 
+var createHistoryMsg = function(uname,hdimg,role,nickname,content){
+    var cn = (uname == curUserId)?"rightContent":"leftContent";
+  //构建语音
+    if(content.indexOf("speak:") != -1){
+        var speakId = content.split(":")[1];
+        var toimg = (uname == curUserId)?"img/right.png":"img/left.png";
+        content = "<img src='"+toimg+"' style='width:33px;height:24px;' onclick='playVoice(\""+speakId+"\")' />";
+    }
+    //构建消息
+    var msg = "<div class='"+cn+"'>";
+        msg +="<div class='sanjiaobox'>";
+        msg += "<img src='img/sj.png'>";
+        msg +="</div>";
+        msg +="<div class='userheadpic'>";
+        msg +="<img src='"+hdimg+"'>";
+        msg +="</div>";
+        if(role != '2'){
+            msg +="<p1>"+nickname+"</p1>";
+        }else{
+            msg +="<p1 style='color: #f00'>"+nickname+"</p1>";
+        }
+        msg +="<p3 class='chat-content-p3' classname='chat-content-p3'>"+content+"</p3>";
+        msg +="</div>";
+    $("#histontent").prepend(msg);
+};
