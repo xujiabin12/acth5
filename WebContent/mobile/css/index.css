@@ -184,6 +184,13 @@
     word-wrap: break-word;
     white-space: pre-wrap;
 }
+.leftContent p1 em,.rightContent p1 em{
+    display: inline-block;
+    color: #B8B8B8;
+    font-size: 18px;
+    margin: 0 20px;
+    font-style: normal;
+}
 .leftContent .userheadpic {
     float: left;
     margin: 15px 0 0 15px;

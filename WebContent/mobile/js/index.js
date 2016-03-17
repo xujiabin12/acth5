@@ -295,45 +295,45 @@ var login = function(){
 };
 //加入群组
 var joinGroup = function(){
-	groupId = "163388045406503384";
-	curUserId = "ueb3b2dc2d";
-    curNickName = "微微";
-    curRole = "2";
-    actUsrId = "da364249962f441da23744c0ef475c42";
-    headImg = "http://wx.qlogo.cn/mmopen/FkiaAvjRkrM1XUROCbp8pib1B4W4HjS3BeAIvqxBvouvL07sBZ9kyMPUZLLicY4AKwToakvmThoxP4v6tYmKNpnriaxicb4nuO2T7/0";
-    login();
+//	groupId = "163388045406503384";
+//	curUserId = "ueb3b2dc2d";
+//    curNickName = "微微";
+//    curRole = "2";
+//    actUsrId = "da364249962f441da23744c0ef475c42";
+//    headImg = "http://wx.qlogo.cn/mmopen/FkiaAvjRkrM1XUROCbp8pib1B4W4HjS3BeAIvqxBvouvL07sBZ9kyMPUZLLicY4AKwToakvmThoxP4v6tYmKNpnriaxicb4nuO2T7/0";
+//    login();
 	
 	
-//    var wxcode = util.getUrlParam("code");
-//     groupId = util.getUrlParam("groupId");
-//    if(wxcode){
-//        $.ajax({
-//            type : "post",
-//            dataType : "json",
-//            data : {
-//                groupId : groupId,
-//                code : wxcode
-//            },
-//            url : util.getServerUrl()+"groups/joinGroup",
-//            success : function(data){
-//                //返回用户信息，调用环信的js登录，进入聊天群组界面
-//                if(data.code == '0'){
-//                    curUserId = data.username;
-//                    curNickName = data.nickname;
-//                    curRole = data.role;
-//                    actUsrId = data.userid;
-//                    headImg = data.headimg;
-//                    login();
-//                }else if(data.code == '3001'){
-//                    window.location.href = "touch.html";
-//                }else{
-//                    alert(data.errorMSG);
-//                }
-//            }
-//        });
-//    }else{
-//        alert("请授权后在访问！");
-//    }
+    var wxcode = util.getUrlParam("code");
+     groupId = util.getUrlParam("groupId");
+    if(wxcode){
+        $.ajax({
+            type : "post",
+            dataType : "json",
+            data : {
+                groupId : groupId,
+                code : wxcode
+            },
+            url : util.getServerUrl()+"groups/joinGroup",
+            success : function(data){
+                //返回用户信息，调用环信的js登录，进入聊天群组界面
+                if(data.code == '0'){
+                    curUserId = data.username;
+                    curNickName = data.nickname;
+                    curRole = data.role;
+                    actUsrId = data.userid;
+                    headImg = data.headimg;
+                    login();
+                }else if(data.code == '3001'){
+                    window.location.href = "touch.html";
+                }else{
+                    alert(data.errorMSG);
+                }
+            }
+        });
+    }else{
+        alert("请授权后在访问！");
+    }
 };
 
 //保存发送消息
@@ -417,8 +417,7 @@ var getHistory = function(){
                     var js = null;
                     for(var i=0;i<ln;i++){
                         js = list[i];
-                        createHistoryMsg(js.username,js.headimg,js.role,js.nickname,js.message);
-                        //js.createdtStr;
+                        createHistoryMsg(js.username,js.headimg,js.role,js.nickname,js.message,js.createdtStr);
                     }
                 }else{
                     alert("无更多聊天记录");
@@ -430,7 +429,7 @@ var getHistory = function(){
     });
 };
 
-var createHistoryMsg = function(uname,hdimg,role,nickname,content){
+var createHistoryMsg = function(uname,hdimg,role,nickname,content,time){
     var cn = (uname == curUserId)?"rightContent":"leftContent";
   //构建语音
     if(content.indexOf("speak:") != -1){
@@ -447,9 +446,9 @@ var createHistoryMsg = function(uname,hdimg,role,nickname,content){
         msg +="<img src='"+hdimg+"'>";
         msg +="</div>";
         if(role != '2'){
-            msg +="<p1>"+nickname+"</p1>";
+            msg +="<p1>"+nickname+"<em>"+time+"</em></p1>";
         }else{
-            msg +="<p1 style='color: #f00'>"+nickname+"</p1>";
+            msg +="<p1 style='color: #f00'><em>"+time+"</em>"+nickname+"</p1>";
         }
         msg +="<p3 class='chat-content-p3' classname='chat-content-p3'>"+content+"</p3>";
         msg +="</div>";
