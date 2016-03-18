@@ -75,15 +75,8 @@ var playVoice = function(serverId){
 
 var toAudio = function(url){
 	 var audio = document.getElementById("actAudio");
-     if(!audio){
-         audio = document.createElement("audio");
-         audio.id = 'actAudio';
          audio.src = url;
-         audio.autoplay = 'autoplay';
-         document.getElementById("body").appendChild(audio);
-     }else{
-         audio.src = url;
-     }
+         audio.play();
 };
 
 

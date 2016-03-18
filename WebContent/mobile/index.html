@@ -16,9 +16,10 @@
 <script src="js/sdk/bootstrap.js"></script>
 <script src="js/util.js?v=1.0"></script>
 <script src="js/index.js?v=1.1"></script>
-<script src="js/sdk/wxaudio.js?v=1.0"></script>
+<script src="js/sdk/wxaudio.js?v=1.2"></script>
 </head>
 <body id="body">
+<audio id="actAudio" src=""></audio>
         <div class="title">
              <span id="talkto2" class="talkto2">聊天记录</span>
             <span id="talkto" class="talkto"></span>
@@ -41,7 +42,7 @@
         <!--聊天记录 end-->
         <!--聊天内容 content end-->
         <div class="footer">
-                <div class="chat02_bar" onclick="sendText()">发送</div>
+                <div class="chat02_bar" onfocus="this.blur();" onclick="sendText()">发送</div>
                 <div id="input_content" class="chat02_content">
                     <textarea id="talkInputId" style="resize: none;"></textarea>
                 </div>
