@@ -76,6 +76,7 @@ var playVoice = function(serverId){
 var toAudio = function(url){
 	 var audio = document.getElementById("actAudio");
          audio.src = url;
+         audio.volume = 0.9;
          audio.play();
 };
 
