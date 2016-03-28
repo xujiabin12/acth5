@@ -16,7 +16,7 @@ $(function(){
 });
 
 wx.error(function (res) {
-	alert("错误："+JSON.stringify(res));
+	alert('录音功能已准备好，请重试！');
 });
 //开始录音
 var startRecord = function(){
