@@ -1,29 +1,28 @@
 var util = window._util;
 
 $(function(){
-	$("#audio").on({
-		touchstart: function(e){
-			//开始录音
-			$("#audio").text("松开 结束");
+	$("#audio").on('touchend',function(){
+		var oc = $(this).attr('o');
+		if(oc == '0'){//点击开始录音了
+			$(this).attr('o','1');
+			$(this).text('结束 录音');
 			startRecord();
-			e.preventDefault();
-			e.stopPropagation();
-		},
-		touchend: function(){
-			//结束录音
-			$("#audio").text("按住 说话");
+		}else{
+			$(this).attr('o','0');
 			stopRecordAndSend();
-			return false;
+			$(this).text('点击开始录音');
 		}
 	});
 });
+
 wx.error(function (res) {
 	alert("错误："+JSON.stringify(res));
 });
 //开始录音
 var startRecord = function(){
-	util.initWxJsAndDo(['checkJsApi','startRecord','stopRecord','uploadVoice'],function(){
+	util.initWxJsAndDo(['checkJsApi','startRecord','stopRecord','uploadVoice','onVoiceRecordEnd'],function(){
 		wx.startRecord();
+		voiceRecordEnd();
 	});
 };
 
@@ -50,6 +49,17 @@ var uploadVoice = function(localId){
 						sendVoice(res.serverId);
 					}
 
+		    }
+		});
+};
+
+//监听录音自动停止接口
+var voiceRecordEnd = function(){
+		wx.onVoiceRecordEnd({
+		    // 录音时间超过一分钟没有停止的时候会执行 complete 回调
+		    complete: function (res) {
+		      //上传语音
+		    	uploadVoice(res.localId);
 		    }
 		});
 };

@@ -1,5 +1,6 @@
 var url = "";
 $(function(){
+	getJoinGroupUrl();
 	listenerShare();
 });
 
