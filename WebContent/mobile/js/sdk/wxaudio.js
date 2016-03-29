@@ -1,6 +1,11 @@
 var util = window._util;
 
 $(function(){
+	util.initWxJsAndDo(['checkJsApi','startRecord','stopRecord','uploadVoice','onVoiceRecordEnd'],null);
+});
+
+
+wx.ready(function(){
 	$("#audio").on('touchend',function(){
 		var oc = $(this).attr('o');
 		if(oc == '0'){//点击开始录音了
@@ -20,10 +25,8 @@ wx.error(function (res) {
 });
 //开始录音
 var startRecord = function(){
-	util.initWxJsAndDo(['checkJsApi','startRecord','stopRecord','uploadVoice','onVoiceRecordEnd'],function(){
-		wx.startRecord();
-		voiceRecordEnd();
-	});
+	wx.startRecord();
+	voiceRecordEnd();
 };
 
 
@@ -111,18 +114,3 @@ var sendVoice = function(serviceId){
 	
 };
 
-//wx.ready(function(){
-//	alert("正在加载...");
-//	util.initWxJsAndDo(['checkJsApi','downloadVoice','playVoice'],function(){
-//		wx.downloadVoice({
-//			serverId: serverId,
-//			isShowProgressTips: 0, // 默认为1，显示进度提示
-//			success: function (res) {
-//				alert(res.localId);
-//				wx.playVoice({
-//					localId: res.localId // 需要播放的音频的本地ID，由stopRecord接口获得
-//				});
-//			}
-//		});
-//	});
-//});

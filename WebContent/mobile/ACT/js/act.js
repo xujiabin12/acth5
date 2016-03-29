@@ -1,31 +1,25 @@
 var url = "";
 $(function(){
+	$("body").hide();
 	getJoinGroupUrl();
-	listenerShare();
 });
 
-//监听微信分享朋友圈
-function listenerShare(){
-	initWxJsAndDo(['checkJsApi','onMenuShareTimeline'],function(){
-		wx.ready(function () {
-		        wx.onMenuShareTimeline({
-		            title: document.title,     //分享后自定义标题
-		            imgUrl: 'http://mobile.u-ef.cn/img/act.jpg',  //分享的LOGO
-		            success: function (res) {
-						var ta = "<a href='"+url+"'>点击连接进入</a>";
-						var ps = $("#js_content").find("p");
-						$(ps[1]).html(ta);
-		            },
-		            cancel: function (res) {
-		            	
-		            }
-		        });
-		    });
-		    wx.error(function (res) {
-		        alert("加载错误！");
-		    });
-	});
-}
+wx.ready(function(){
+	$("body").show();
+	 wx.onMenuShareTimeline({
+         title: document.title,     //分享后自定义标题
+         imgUrl: 'http://mobile.u-ef.cn/img/act.jpg',  //分享的LOGO
+         success: function (res) {
+				var ta = "<a href='"+url+"'>点击连接进入</a>";
+				var ps = $("#js_content").find("p");
+				$(ps[1]).html(ta);
+         },
+         cancel: function (res) {
+         	
+         }
+     });
+});
+
 
 
 var serverUrl = "http://101.201.209.109/act/";
@@ -50,8 +44,10 @@ var initWxJsAndDo = function(jsApi,callMethod){
                     signature : data.signature,// 必填，签名，见附录1
                     jsApiList : jsApi// 必填，需要使用的JS接口列表
                 });
+                if(callMethod){
+                	callMethod();
+                }
                 
-                callMethod();
 			}else{
 				alert("操作失败");
 			}
@@ -67,6 +63,7 @@ var getJoinGroupUrl = function () {
 		success : function(data){
 			if(data.code=="0"){
 				url = data.url;
+				initWxJsAndDo(['checkJsApi','onMenuShareTimeline'],null);
 			}else{
 				alert("获取连接失败");
 			}

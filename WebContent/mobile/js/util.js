@@ -64,8 +64,9 @@
                         signature : data.signature,// 必填，签名，见附录1
                         jsApiList : jsApi// 必填，需要使用的JS接口列表
                     });
-                    
-                    callMethod();
+                    if(callMethod){
+                    	callMethod();
+                    }
     			}else{
     				alert("操作失败");
     			}
