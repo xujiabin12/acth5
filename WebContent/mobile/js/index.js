@@ -13,17 +13,18 @@ var talkInputId = "talkInputId";
 var curRoomId = null;
 var onlyTeacher = "1";
 $(function(){
-	$('.content').css('height',$(window).height()-172);
-    $(window).resize(function(){$('.content').css('height',$(window).height()-172);});
+	//$('.content').css('height',$(window).height()-172);
+    /*$(window).resize(function(){$('.content').css('height',$(window).height()-172);});
     $('#talkInputId').focus(function(){
         $('.content').css('height',$(window).height()-172);}
     ).blur(function(){
             $('.content').css('height',$(window).height()-172);
-        });
+        });*/
     $("#loadmore").click(getHistory);
     $("#talkto2").click(function(){
     	$("#histontent").html("");
         getHistory();
+        $('.footer').hide();
         $("#onlyTeacher,#chat01").hide();
         $("#talktoclose,#historybox").show();
     });
@@ -31,6 +32,7 @@ $(function(){
     	pageNo = 0;
         $("#historybox,#talktoclose").hide();
         $("#onlyTeacher,#chat01").show();
+        $('.footer').show();
     });
     //语音切换
     $('.eachjp_yuyin').click(function(){
@@ -295,12 +297,12 @@ var login = function(){
 };
 //加入群组
 var joinGroup = function(){
-//	groupId = "163388045406503384";
-//	curUserId = "ueb3b2dc2d";
-//    curNickName = "微微";
+//	groupId = "188965119181455800";
+//	curUserId = "ue6df6c3d5";
+//    curNickName = "王歪";
 //    curRole = "2";
-//    actUsrId = "da364249962f441da23744c0ef475c42";
-//    headImg = "http://wx.qlogo.cn/mmopen/FkiaAvjRkrM1XUROCbp8pib1B4W4HjS3BeAIvqxBvouvL07sBZ9kyMPUZLLicY4AKwToakvmThoxP4v6tYmKNpnriaxicb4nuO2T7/0";
+//    actUsrId = "cc30f395e3e24b0b9d3d0f68b2e7dd81";
+//    headImg = "http://wx.qlogo.cn/mmopen/PiajxSqBRaEL1yX3hCgEaonHHakZbUmL7SLRs574mxaH9wvibQDsjUUjn3ZpmGSMrxmccmiasrHPUawwHXLHeJxmg/0";
 //    login();
 	
 	

@@ -115,9 +115,14 @@
 }
 .content,.historybox{
     display: block;
-    overflow-y: auto;
+    overflow: hidden;
     width: 640px;
-    margin: 80px 0 90px;
+}
+.content{
+    margin: 40px 0 50px;
+}
+.historybox{
+    margin: 80px 0 0px;
 }
 .rightContent, .leftContent {
     display: block;
@@ -221,4 +226,7 @@
 .historybox{
     display: none;
     background: #e1e1e1;
+}
+.historybox .leftContent p3,.historybox .rightContent p3{
+    font-size:28px;
 }
