@@ -74,21 +74,19 @@ $(function(){
 
   //查看大图
     $(".actimg").live('click',function(){
-            var src=$(this).attr('o');
-            var wid=$(this).width();
-            var hei=$(this).height();
-            if(wid>hei){
-                $('.openbox').show().find('img').attr('src',src);
-                $('.openbox img').css({'width':'100%','margin-left':'-320px','margin-top':0-(640*hei/wid)/2});
-            }else if(wid=hei){
-                $('.openbox').show().find('img').attr('src',src);
-                $('.openbox img').css({'width':'100%','margin-left':'-320px','margin-top':'-320px'});
-            }else{
+	    	var src=$(this).attr('o');
+	        var wid=$(this).width();
+	        var hei=$(this).height();
+            if(wid<hei){
                 $('.openbox').show().find('img').attr('src',src);
                 $('.openbox img').css({'height':'800px','margin-top':'-400px','margin-left':0-(800*wid/hei)/2});
+            }else{
+                $('.openbox').show().find('img').attr('src',src);
+                $('.openbox img').css({'width':'100%','margin-left':'-320px','margin-top':0-(640*hei/wid)/2});
             }
     });
     $('.openbox,.openboxbg,.openbox img').click(function(){
+    	$('.openbox img').attr('src','');
         $('.openbox').hide();
     });
 });
@@ -321,45 +319,45 @@ var login = function(){
 };
 //加入群组
 var joinGroup = function(){
-	groupId = "188965119181455800";
-	curUserId = "ue6df6c3d5";
-    curNickName = "王歪";
-    curRole = "2";
-    actUsrId = "cc30f395e3e24b0b9d3d0f68b2e7dd81";
-    headImg = "http://wx.qlogo.cn/mmopen/PiajxSqBRaEL1yX3hCgEaonHHakZbUmL7SLRs574mxaH9wvibQDsjUUjn3ZpmGSMrxmccmiasrHPUawwHXLHeJxmg/0";
-    login();
+//	groupId = "188965119181455800";
+//	curUserId = "ue6df6c3d5";
+//    curNickName = "王歪";
+//    curRole = "2";
+//    actUsrId = "cc30f395e3e24b0b9d3d0f68b2e7dd81";
+//    headImg = "http://wx.qlogo.cn/mmopen/PiajxSqBRaEL1yX3hCgEaonHHakZbUmL7SLRs574mxaH9wvibQDsjUUjn3ZpmGSMrxmccmiasrHPUawwHXLHeJxmg/0";
+//    login();
 	
 	
-//    var wxcode = util.getUrlParam("code");
-//     groupId = util.getUrlParam("groupId");
-//    if(wxcode){
-//        $.ajax({
-//            type : "post",
-//            dataType : "json",
-//            data : {
-//                groupId : groupId,
-//                code : wxcode
-//            },
-//            url : util.getServerUrl()+"groups/joinGroup",
-//            success : function(data){
-//                //返回用户信息，调用环信的js登录，进入聊天群组界面
-//                if(data.code == '0'){
-//                    curUserId = data.username;
-//                    curNickName = data.nickname;
-//                    curRole = data.role;
-//                    actUsrId = data.userid;
-//                    headImg = data.headimg;
-//                    login();
-//                }else if(data.code == '3001'){
-//                    window.location.href = "touch.html";
-//                }else{
-//                    alert(data.errorMSG);
-//                }
-//            }
-//        });
-//    }else{
-//        alert("请授权后在访问！");
-//    }
+    var wxcode = util.getUrlParam("code");
+     groupId = util.getUrlParam("groupId");
+    if(wxcode){
+        $.ajax({
+            type : "post",
+            dataType : "json",
+            data : {
+                groupId : groupId,
+                code : wxcode
+            },
+            url : util.getServerUrl()+"groups/joinGroup",
+            success : function(data){
+                //返回用户信息，调用环信的js登录，进入聊天群组界面
+                if(data.code == '0'){
+                    curUserId = data.username;
+                    curNickName = data.nickname;
+                    curRole = data.role;
+                    actUsrId = data.userid;
+                    headImg = data.headimg;
+                    login();
+                }else if(data.code == '3001'){
+                    window.location.href = "touch.html";
+                }else{
+                    alert(data.errorMSG);
+                }
+            }
+        });
+    }else{
+        alert("请授权后在访问！");
+    }
 };
 
 //保存发送消息
