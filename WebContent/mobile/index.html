@@ -7,16 +7,17 @@
 <meta name="browsermode" content="application"/>
 <title>ACT课堂</title>
 <link rel="stylesheet" href="css/index.css?v=1.1" />
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script src="js/sdk/jquery-1.11.1.js"></script>
-<script src="js/sdk/strophe.js"></script>
-<script src="js/sdk/json2.js"></script>
-<script src="js/sdk/easemob.im-1.0.7.js"></script>
-<script src="js/sdk/easemob.im.config.js"></script>
-<script src="js/sdk/bootstrap.js"></script>
-<script src="js/util.js?v=1.0"></script>
-<script src="js/index.js?v=1.2"></script>
-<script src="js/sdk/wxaudio.js?v=1.4.6"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.form.js"></script>
+<script type="text/javascript" src="js/sdk/strophe.js"></script>
+<script type="text/javascript" src="js/sdk/json2.js"></script>
+<script type="text/javascript" src="js/sdk/easemob.im-1.0.7.js"></script>
+<script type="text/javascript" src="js/sdk/easemob.im.config.js"></script>
+<script type="text/javascript" src="js/sdk/bootstrap.js"></script>
+<script type="text/javascript" src="js/util.js?v=1.0"></script>
+<script type="text/javascript" src="js/index.js?v=1.2"></script>
+<script type="text/javascript" src="js/sdk/wxaudio.js?v=1.4.6"></script>
 </head>
 <body id="body">
 <audio id="actAudio" src=""></audio>
@@ -43,6 +44,14 @@
         <!--聊天内容 content end-->
         <div class="footer">
                 <div class="chat02_bar" onfocus="this.blur();" onclick="sendText()">发送</div>
+            <!--发送图片-->
+            <div class="sendimg">
+                <em>+</em>
+                <form id="fileform" action="" method="post" enctype="multipart/form-data">
+                    <input type="file" name="fileToUpload" id="fileToUpload" onchange="ajaxFileUpload()"/>
+                </form>
+            </div>
+            <!--发送图片 end-->
                 <div id="input_content" class="chat02_content">
                     <textarea id="talkInputId" style="resize: none;"></textarea>
                 </div>
@@ -50,6 +59,13 @@
                 <div class="eachjp_yuyin on"></div>
                 <div style="clear: both;"></div>
         </div>
+
+<!--openbox -->
+<div class="openbox">
+    <div class="openboxbg"></div>
+    <img src="" />
+</div>
+<!--openbox end-->
 </body>
 </html>
 

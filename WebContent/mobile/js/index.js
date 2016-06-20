@@ -72,7 +72,25 @@ $(function(){
 
     joinGroup();
 
-//    login();
+  //查看大图
+    $(".actimg").live('click',function(){
+            var src=$(this).attr('o');
+            var wid=$(this).width();
+            var hei=$(this).height();
+            if(wid>hei){
+                $('.openbox').show().find('img').attr('src',src);
+                $('.openbox img').css({'width':'100%','margin-left':'-320px','margin-top':0-(640*hei/wid)/2});
+            }else if(wid=hei){
+                $('.openbox').show().find('img').attr('src',src);
+                $('.openbox img').css({'width':'100%','margin-left':'-320px','margin-top':'-320px'});
+            }else{
+                $('.openbox').show().find('img').attr('src',src);
+                $('.openbox img').css({'height':'800px','margin-top':'-400px','margin-left':0-(800*wid/hei)/2});
+            }
+    });
+    $('.openbox,.openboxbg,.openbox img').click(function(){
+        $('.openbox').hide();
+    });
 });
 
 //登录成功回调
@@ -147,7 +165,7 @@ var handleError = function(e) {
 };
 
 //发送消息
-var sendText = function(serverId) {
+var sendText = function(serverId,imgData) {
     if(!isStopSpeak()){
     	alert("你已被禁言10分钟");
         return;
@@ -157,7 +175,9 @@ var sendText = function(serverId) {
     if(serverId){
         msg = "speak:"+serverId;
     }
-
+    if(imgData){
+    	msg = "actimg:<img class='actimg'  o='"+imgData.url+"' src='"+imgData.smallUrl+"' />";;
+    }
     if (msg == null || msg.length == 0) {
         return;
     }
@@ -260,6 +280,10 @@ var createMsg = function(owner,headimg,nickname,content,contactDivId,role){
         var toimg = owner?"img/right.png":"img/left.png";
         content = "<img src='"+toimg+"' style='width:33px;height:24px;' onclick='playVoice(\""+speakId+"\")' />";
     }
+  //构建图片
+    if(content.indexOf("actimg:") != -1){
+    	content = content.split("actimg:")[1];
+    }
     //构建消息
     var msg = "<div class='"+cn+" "+state+"'>";
             msg +="<div class='sanjiaobox'>";
@@ -297,45 +321,45 @@ var login = function(){
 };
 //加入群组
 var joinGroup = function(){
-//	groupId = "188965119181455800";
-//	curUserId = "ue6df6c3d5";
-//    curNickName = "王歪";
-//    curRole = "2";
-//    actUsrId = "cc30f395e3e24b0b9d3d0f68b2e7dd81";
-//    headImg = "http://wx.qlogo.cn/mmopen/PiajxSqBRaEL1yX3hCgEaonHHakZbUmL7SLRs574mxaH9wvibQDsjUUjn3ZpmGSMrxmccmiasrHPUawwHXLHeJxmg/0";
-//    login();
+	groupId = "188965119181455800";
+	curUserId = "ue6df6c3d5";
+    curNickName = "王歪";
+    curRole = "2";
+    actUsrId = "cc30f395e3e24b0b9d3d0f68b2e7dd81";
+    headImg = "http://wx.qlogo.cn/mmopen/PiajxSqBRaEL1yX3hCgEaonHHakZbUmL7SLRs574mxaH9wvibQDsjUUjn3ZpmGSMrxmccmiasrHPUawwHXLHeJxmg/0";
+    login();
 	
 	
-    var wxcode = util.getUrlParam("code");
-     groupId = util.getUrlParam("groupId");
-    if(wxcode){
-        $.ajax({
-            type : "post",
-            dataType : "json",
-            data : {
-                groupId : groupId,
-                code : wxcode
-            },
-            url : util.getServerUrl()+"groups/joinGroup",
-            success : function(data){
-                //返回用户信息，调用环信的js登录，进入聊天群组界面
-                if(data.code == '0'){
-                    curUserId = data.username;
-                    curNickName = data.nickname;
-                    curRole = data.role;
-                    actUsrId = data.userid;
-                    headImg = data.headimg;
-                    login();
-                }else if(data.code == '3001'){
-                    window.location.href = "touch.html";
-                }else{
-                    alert(data.errorMSG);
-                }
-            }
-        });
-    }else{
-        alert("请授权后在访问！");
-    }
+//    var wxcode = util.getUrlParam("code");
+//     groupId = util.getUrlParam("groupId");
+//    if(wxcode){
+//        $.ajax({
+//            type : "post",
+//            dataType : "json",
+//            data : {
+//                groupId : groupId,
+//                code : wxcode
+//            },
+//            url : util.getServerUrl()+"groups/joinGroup",
+//            success : function(data){
+//                //返回用户信息，调用环信的js登录，进入聊天群组界面
+//                if(data.code == '0'){
+//                    curUserId = data.username;
+//                    curNickName = data.nickname;
+//                    curRole = data.role;
+//                    actUsrId = data.userid;
+//                    headImg = data.headimg;
+//                    login();
+//                }else if(data.code == '3001'){
+//                    window.location.href = "touch.html";
+//                }else{
+//                    alert(data.errorMSG);
+//                }
+//            }
+//        });
+//    }else{
+//        alert("请授权后在访问！");
+//    }
 };
 
 //保存发送消息
@@ -439,6 +463,10 @@ var createHistoryMsg = function(uname,hdimg,role,nickname,content,time){
         var toimg = (uname == curUserId)?"img/right.png":"img/left.png";
         content = "<img src='"+toimg+"' style='width:33px;height:24px;' onclick='playVoice(\""+speakId+"\")' />";
     }
+    //构建图片
+    if(content.indexOf("actimg:") != -1){
+    	content = content.split("actimg:")[1];
+    }
     //构建消息
     var msg = "<div class='"+cn+"'>";
         msg +="<div class='sanjiaobox'>";
@@ -456,3 +484,19 @@ var createHistoryMsg = function(uname,hdimg,role,nickname,content,time){
         msg +="</div>";
     $("#histontent").prepend(msg);
 };
+function ajaxFileUpload(){
+	$("#fileform").ajaxSubmit({
+		url : util.getServerUrl()+"upload/fileUpload",
+		type : "post",
+		dataType : "json",
+		clearForm : true,
+		resetForm : true,
+		success : function(data){
+			if(data.code == '0'){
+				sendText("",data);
+			}else{
+				alert("发送图片失败");
+			}
+		}
+	});
+}

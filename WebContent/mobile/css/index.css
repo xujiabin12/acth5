@@ -70,13 +70,13 @@
     line-height: 60px;
 }
 .chat02_content {
-    width: 425px;
+    width: 365px;
     float: right;
 }
 .chat02_content textarea {
     border: medium none;
     display: block;
-    width: 405px;
+    width: 345px;
     height: 40px;
     padding: 10px;
     font-size: 22px;
@@ -108,7 +108,7 @@
 .eachjp_yuyin {
     float: right;
     height: 60px;
-    width: 120px;
+    width: 94px;
     text-align: center;
     line-height: 60px;
     font-size: 25px;
@@ -231,4 +231,61 @@
 }
 .historybox .leftContent p3,.historybox .rightContent p3{
     font-size:28px;
+}
+.sendimg{
+    float: right;
+    width: 90px;
+    height: 60px;
+    position: relative;
+}
+.sendimg em{
+    display: block;
+    margin: 10px 0 0 30px;
+    font-style: normal;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #c2c2c4;
+    text-align: center;
+    line-height: 44px;
+    -webkit-border-radius:50%;
+    -moz-border-radius:50%;
+    border-radius:50%;
+    font-size: 50px;
+    font-weight: bold;
+}
+.sendimg input{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+.boxcontent2 p3 img, .boxcontent p3 img{
+    display: block;
+    max-width: 420px;
+}
+.openbox{
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top:0;
+    z-index: 10000;
+}
+.openboxbg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left: 0;
+    background: #000;
+    z-index: 1;
+}
+.openbox img{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
 }
